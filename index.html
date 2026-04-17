@@ -3,25 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Finanzas 💸</title>
+  <title>Finanzas</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-  <div class="app">
-    <h1>💸 Mis Gastos</h1>
+<!-- MENU -->
+<div id="menu" class="screen active">
+  <h1 class="fade-up">Finanzas</h1>
+  <h2 id="mainBalance">$0</h2>
 
-    <div class="total" id="total">$0</div>
+  <button class="fade-up delay-1" onclick="showScreen('ingresos')">Ingresos</button>
+  <button class="fade-up delay-2" onclick="showScreen('gastos')">Gastos</button>
+  <button class="fade-up delay-3" onclick="showScreen('stats')">Estadísticas</button>
+  <button class="fade-up delay-4" onclick="showScreen('opciones')">Opciones</button>
+</div>
 
-    <input type="number" id="amount" placeholder="Cantidad">
-    <input type="text" id="desc" placeholder="Ej: tacos 🌮">
+<!-- GASTOS -->
+<div id="gastos" class="screen">
+  <button onclick="goMenu()">Volver</button>
 
-    <button onclick="addExpense()">Agregar</button>
+  <h2>Gastos</h2>
 
-    <ul id="list"></ul>
+  <div id="total">$0</div>
+
+  <select id="category">
+    <option value="">Selecciona categoría</option>
+    <option value="Comida">🍔 Comida</option>
+    <option value="Despensa">🛒 Despensa</option>
+    <option value="Transporte">⛽ Transporte</option>
+    <option value="Ocio">🎮 Ocio</option>
+    <option value="Otros">📦 Otros</option>
+  </select>
+
+  <input type="number" id="amount" placeholder="Cantidad">
+  <input type="text" id="desc" placeholder="Descripción">
+
+  <button onclick="addExpense()">Agregar</button>
+
+  <ul id="list"></ul>
+</div>
+
+<!-- INGRESOS -->
+<div id="ingresos" class="screen">
+  <button onclick="goMenu()">Volver</button>
+
+  <h2>Ingresos</h2>
+
+<input type="text" id="incomeSource" placeholder="Ej: CFE, freelance, negocio">
+<input type="number" id="incomeAmount" placeholder="Monto">
+
+<button onclick="addIncome()">Guardar</button>
+
+<ul id="incomeList"></ul>
+</div>
+
+<!-- STATS -->
+<div id="stats" class="screen">
+  <button onclick="goMenu()">Volver</button>
+
+  <h2>Estadísticas</h2>
+
+  <!-- 🔥 Tabs -->
+  <div>
+    <button onclick="setMode('month')">Mensual</button>
+    <button onclick="setMode('year')">Anual</button>
+    <button onclick="setMode('total')">Total</button>
   </div>
 
-  <script src="app.js"></script>
+  <!-- 📅 Filtro mes -->
+  <input type="month" id="monthFilter">
+
+  <!-- 📊 Datos -->
+  <p id="totalIncome">Ingresos: $0</p>
+  <p id="totalExpense">Gastos: $0</p>
+  <p id="balance">Balance: $0</p>
+
+  <!-- 📈 Gráfica -->
+  <canvas id="myChart"></canvas>
+</div>
+
+<!-- OPCIONES -->
+<div id="opciones" class="screen">
+  <button onclick="goMenu()">Volver</button>
+  <h2>Opciones</h2>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
