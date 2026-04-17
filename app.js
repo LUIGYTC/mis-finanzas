@@ -127,6 +127,13 @@ function updateMainBalance() {
 function setMode(mode) {
   currentMode = mode;
 
+  const monthInput = document.getElementById("monthFilter");
+
+  // 🔥 mostrar u ocultar
+  if (monthInput) {
+    monthInput.style.display = (mode === "month") ? "block" : "none";
+  }
+
   if (mode === "month") {
     renderChartByMonth();
   } else if (mode === "year") {
@@ -136,6 +143,35 @@ function setMode(mode) {
   }
 
   renderStatsByMode();
+  updateStatsTitle();
+}
+
+function updateStatsTitle() {
+  const title = document.getElementById("statsTitle");
+  if (!title) return;
+
+  if (currentMode === "month") {
+    const input = document.getElementById("monthFilter").value;
+
+    if (input) {
+      const [year, month] = input.split("-");
+      const date = new Date(year, month - 1);
+
+      const formatted = date.toLocaleDateString("es-ES", {
+        month: "long",
+        year: "numeric"
+      });
+
+      title.textContent = "Estadísticas - " + formatted;
+    }
+
+  } else if (currentMode === "year") {
+    const year = new Date().getFullYear();
+    title.textContent = "Estadísticas - " + year;
+
+  } else {
+    title.textContent = "Estadísticas - Total";
+  }
 }
 
 function renderStatsByMode() {
@@ -198,7 +234,7 @@ function renderChartByMonth() {
     }
   });
 
-  drawChart(data);
+  drawChart(data); // 🔥 SOLO esto
 }
 
 function renderChartByYear() {
@@ -212,7 +248,7 @@ function renderChartByYear() {
     }
   });
 
-  drawChart(data);
+  drawChart(data); // 🔥
 }
 
 function renderChartTotal() {
@@ -223,19 +259,26 @@ function renderChartTotal() {
     data[e.category] += e.amount;
   });
 
-  drawChart(data);
+  drawChart(data); // 🔥
 }
 
 function drawChart(data) {
   const labels = Object.keys(data);
   const values = Object.values(data);
 
+  const total = values.reduce((sum, v) => sum + v, 0);
+
+  const labelsWithPercent = labels.map((label, i) => {
+    const percent = ((values[i] / total) * 100).toFixed(1);
+    return `${label} (${percent}%)`;
+  });
+
   if (chart) chart.destroy();
 
   chart = new Chart(document.getElementById("myChart"), {
-    type: "pie",
+    type: "doughnut", // 🔥 mejor que pie
     data: {
-      labels: labels,
+      labels: labelsWithPercent,
       datasets: [{
         data: values,
         backgroundColor: [
@@ -243,9 +286,31 @@ function drawChart(data) {
           "#3b82f6",
           "#f59e0b",
           "#ef4444",
-          "#8b5cf6"
-        ]
+          "#8b5cf6",
+          "#06b6d4"
+        ],
+        borderWidth: 2,
+        borderColor: "#ffffff"
       }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom", // 🔥 se ve más limpio
+          labels: {
+            color: "#333",
+            font: {
+              size: 14
+            }
+          }
+        }
+      },
+      cutout: "60%", // 🔥 dona (pro)
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      }
     }
   });
 }
