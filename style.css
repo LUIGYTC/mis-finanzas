@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+}
+
+.app {
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.total {
+  font-size: 2em;
+  text-align: center;
+  margin: 20px 0;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+input {
+  background: #1e293b;
+  color: white;
+}
+
+button {
+  background: #22c55e;
+  color: black;
+  font-weight: bold;
+}
+
+li {
+  background: #1e293b;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  list-style: none;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Finanzas 💸</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <div class="app">
+    <h1>💸 Mis Gastos</h1>
+
+    <div class="total" id="total">$0</div>
+
+    <input type="number" id="amount" placeholder="Cantidad">
+    <input type="text" id="desc" placeholder="Ej: tacos 🌮">
+
+    <button onclick="addExpense()">Agregar</button>
+
+    <ul id="list"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
